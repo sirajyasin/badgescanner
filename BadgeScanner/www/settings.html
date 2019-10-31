@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/all.css">
+        <title>E-Madallion</title>
+    </head>
+    <body>
+	<div class="page_header">
+            <div class="head col-lg-12 btn btn-primary"> <a class="menu home" href="index.html"><i class="fa fa-fw fa-home"></i></a>  E-Medallion <a class="menu settings" href="settings.html"><i class="fa fa-fw fa-user-cog"></i></a></div>
+	</div>
+        <div class="container">
+	  <div class="row">
+<form class="form-horizontal" method="post" action="#">
+						
+	<div class="form-group">
+		<label for="name" class="cols-lg-6 control-label">API Server</label>
+		<div class="cols-sm-10">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-server fa" aria-hidden="true"></i></span>
+				<input type="text" class="form-control" name="api_server" id="api_server" placeholder="API Server IP" required>
+			</div>
+		</div>
+	</div>
+
+	<div id='old_server'></div>
+	<button id='save' class="btn btn-success">Save</button>
+	
+ </form>
+		  
+	  </div>
+        </div>
+        <!--<div class="page_footer">
+          <footer class="footer site_color1">
+            <div class="container">
+              <span class="text-muted">Ericsson Proprietary (Restricted access).</span>
+            </div>
+          </footer>
+	</div>-->
+
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="cordova.js"></
+        <script type="text/javascript" src="js/index.js"></script>
+	<script>
+	  $('#save').click(function(e) {
+              window.localStorage.setItem('api_server',  $('#api_server')[0].value);
+	  })
+          $(document).ready(function(){
+		  var server =  window.localStorage.getItem('api_server')
+		  if(server != null) {
+			 $('#old_server').html('Server IP: ' + server);
+		  }
+	  });
+	</script>
+    </body>
+</html>
