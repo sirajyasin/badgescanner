@@ -20,7 +20,19 @@
 		<div class="cols-sm-10">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-server fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="api_server" id="api_server" placeholder="API Server IP" required>
+				<input type="text" class="form-control" name="api_server" id="api_server" placeholder="API Server IP" value='https://wap.tplinkcloud.com/' required>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-plug fa" aria-hidden="true"></i></span>
+				<input type="text" class="form-control" name="token" id="token" placeholder="Token" value='f1f2df00-A1v58z3AR3UJ8wcuwUI9Ks9' required>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-plug fa" aria-hidden="true"></i></span>
+				<input type="text" class="form-control" name="red_plug_id" id="red_plug_id" placeholder="Red Plug ID" value='8006483CBBE44CAE81CCD5BC07526DF61A5A9B8E' required>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-plug fa" aria-hidden="true"></i></span>
+				<input type="text" class="form-control" name="green_plug_id" id="green_plug_id" placeholder="Green Plug Id" value='80065D728E14913AAD1899ABBD49774E1A5A1365' required>
 			</div>
 		</div>
 	</div>
@@ -46,6 +58,10 @@
 	<script>
 	  $('#save').click(function(e) {
               window.localStorage.setItem('api_server',  $('#api_server')[0].value);
+              window.localStorage.setItem('plug1_deviceid',  $('#plug1_deviceid')[0].value);
+              window.localStorage.setItem('plug1_token',  $('#plug1_token')[0].value);
+              window.localStorage.setItem('plug2_deviceid',  $('#plug2_deviceid')[0].value);
+              window.localStorage.setItem('plug2_token',  $('#plug2_token')[0].value);
 	  })
           $(document).ready(function(){
 		  var server =  window.localStorage.getItem('api_server')
