@@ -1,7 +1,9 @@
 
 var red_plug_id = "8006483CBBE44CAE81CCD5BC07526DF61A5A9B8E";
 var green_plug_id = "80065D728E14913AAD1899ABBD49774E1A5A1365";
-var token = "f1f2df00-A1v58z3AR3UJ8wcuwUI9Ks9";
+var plug_token = "f1f2df00-A1v58z3AR3UJ8wcuwUI9Ks9";
+var light_token = "cb285a31cee4325fddb8fffddfd80dfb5c1d24cbb797598da8772c83b3453fb6";
+
 
 function api_call(state, device_id) {
    var api_server = 'https://wap.tplinkcloud.com/';
@@ -10,7 +12,7 @@ function api_call(state, device_id) {
      "params": {
        "deviceId": device_id,
        "requestData": "{\"system\":{\"set_relay_state\":{\"state\":"+ state +"}}}",
-       "token": token
+       "token": plug_token
      }
    }
   
@@ -24,16 +26,53 @@ function api_call(state, device_id) {
    });
 }
 
+function light(action, color) {
+   var api_server = 'https://api.lifx.com/v1/lights/all/state';
+   var _data = {
+    "power": action,
+    "color": color,
+    "duration": 0,
+    "fast": true
+   }
+  
+   $.support.cors = true;
+   $.ajax({
+      url:  api_server,
+      type: "PUT",
+      data: JSON.stringify(_data),
+      dataType: "json",
+      headers: {"Authorization": "Bearer " + light_token},
+      contentType: "application/json; charset=utf-8"
+   });
+
+}
+
+function turn_on_green_light() {
+   light('on', 'green') 
+}
+
+function turn_on_red_light() {
+   light('on', 'red') 
+}
+
+function turn_off_light() {
+   light('off', '') 
+}
+
 function allow_user() {
-    alert('allow user');
     api_call(1, green_plug_id);
+    turn_on_green_light()
     setTimeout(function(){ api_call(0, green_plug_id); }, 1000);
+    setTimeout(function(){ turn_off_light(); }, 5000);
+    startScan();
 }
 
 function deny_user() {
-    alert('deny user');
     api_call(1, red_plug_id);
+    turn_on_red_light()
     setTimeout(function(){ api_call(0, red_plug_id); }, 1000);
+    setTimeout(function(){ turn_off_light(); }, 5000);
+    startScan();
 }
 
 function startScan() {
