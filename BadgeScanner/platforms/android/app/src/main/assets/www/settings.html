@@ -35,8 +35,12 @@
 				<input type="text" class="form-control" name="green_plug_id" id="green_plug_id" placeholder="Green Plug Id" value='80065D728E14913AAD1899ABBD49774E1A5A1365' required>
 			</div>
 			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-light fa" aria-hidden="true"></i></span>
+				<span class="input-group-addon"><i class="fa fa-lightbulb fa" aria-hidden="true"></i></span>
 				<input type="text" class="form-control" name="lifx_token" id="lifx_token" placeholder="Light Token" value='cb285a31cee4325fddb8fffddfd80dfb5c1d24cbb797598da8772c83b3453fb6' required>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-user-plus fa" aria-hidden="true"></i></span>
+				<input type="text" class="form-control" name="valid_users" id="valid_users" placeholder="Valid Users" value='efgjkmp,ebalkan,eamaral' required>
 			</div>
 		</div>
 	</div>
@@ -66,6 +70,7 @@
               window.localStorage.setItem('plug1_token',  $('#plug1_token')[0].value);
               window.localStorage.setItem('plug2_deviceid',  $('#plug2_deviceid')[0].value);
               window.localStorage.setItem('plug2_token',  $('#plug2_token')[0].value);
+              window.localStorage.setItem('valid_users',  $('#valid_users')[0].value);
 	  })
           $(document).ready(function(){
 		  var server =  window.localStorage.getItem('api_server')

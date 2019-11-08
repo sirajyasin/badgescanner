@@ -62,21 +62,27 @@ function turn_off_light() {
 function allow_user() {
     api_call(1, green_plug_id);
     turn_on_green_light()
-    setTimeout(function(){ api_call(0, green_plug_id); }, 1000);
-    setTimeout(function(){ turn_off_light(); }, 5000);
+    setTimeout(function(){ api_call(0, green_plug_id); }, 500);
+    setTimeout(function(){ turn_off_light(); }, 6000);
     startScan();
 }
 
 function deny_user() {
     api_call(1, red_plug_id);
     turn_on_red_light()
-    setTimeout(function(){ api_call(0, red_plug_id); }, 1000);
-    setTimeout(function(){ turn_off_light(); }, 5000);
+    setTimeout(function(){ api_call(0, red_plug_id); }, 500);
+    setTimeout(function(){ turn_off_light(); }, 6000);
     startScan();
 }
 
 function startScan() {
-        var valid_users = ['efgjkmp', 'ebalkan', 'eamaral'];
+        var valid_users;
+	users = window.localStorage.getItem('valid_users');
+	if ( users.trim().length != 0) {
+		valid_users = users.split(",");
+	} else {
+		valid_users = ['efgjkmp', 'ebalkan', 'eamaral'];
+	}
 	cordova.plugins.barcodeScanner.scan(
 		function (result) {
 		  if (valid_users.includes(result.text)) {
