@@ -78,7 +78,7 @@ function deny_user() {
 function startScan() {
         var valid_users;
 	users = window.localStorage.getItem('valid_users');
-	if ( users.trim().length != 0) {
+	if ( users && users.trim().length != 0) {
 		valid_users = users.split(",");
 	} else {
 		valid_users = ['efgjkmp', 'ebalkan', 'eamaral'];
