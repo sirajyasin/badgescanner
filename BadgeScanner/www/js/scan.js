@@ -65,7 +65,6 @@ function allow_user() {
     turn_on_green_light()
     setTimeout(function(){ api_call(0, green_plug_id); }, 500);
     setTimeout(function(){ turn_off_light(); }, 6000);
-    setTimeout(startScan, 10000);
 }
 
 function deny_user() {
@@ -73,7 +72,6 @@ function deny_user() {
     turn_on_red_light()
     setTimeout(function(){ api_call(0, red_plug_id); }, 500);
     setTimeout(function(){ turn_off_light(); }, 6000);
-    setTimeout(startScan, 10000);
 }
 
 function startScan() {
@@ -93,10 +91,12 @@ function startScan() {
 		              $('#blink')[0].style.display = 'block';
 		              $('#blink')[0].style.background = 'green';
 		              allow_user();
+                              setTimeout(startScan, 10000);
 		      } else {
 		              $('#blink')[0].style.display = 'block';
 		              $('#blink')[0].style.background = 'red';
 		              deny_user();
+                              setTimeout(startScan, 10000);
 	              }
 		  }
                         
