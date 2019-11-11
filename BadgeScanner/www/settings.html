@@ -71,6 +71,7 @@
               window.localStorage.setItem('plug2_deviceid',  $('#plug2_deviceid')[0].value);
               window.localStorage.setItem('plug2_token',  $('#plug2_token')[0].value);
               window.localStorage.setItem('valid_users',  $('#valid_users')[0].value);
+	      e.preventDefault();
 	  })
           $(document).ready(function(){
 		  var server =  window.localStorage.getItem('api_server')
