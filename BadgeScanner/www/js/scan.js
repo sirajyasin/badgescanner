@@ -66,7 +66,6 @@ function allow_user() {
     setTimeout(function(){ api_call(0, green_plug_id); }, 500);
     setTimeout(function(){ turn_off_light(); }, 6000);
     setTimeout(startScan, 10000);
-    startScan();
 }
 
 function deny_user() {
@@ -75,7 +74,6 @@ function deny_user() {
     setTimeout(function(){ api_call(0, red_plug_id); }, 500);
     setTimeout(function(){ turn_off_light(); }, 6000);
     setTimeout(startScan, 10000);
-    startScan();
 }
 
 function startScan() {
