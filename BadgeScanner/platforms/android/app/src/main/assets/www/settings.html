@@ -76,6 +76,7 @@
 		  var server =  window.localStorage.getItem('api_server')
 		  if(server != null) {
 			 $('#old_server').html('Server IP: ' + server);
+			 $('#valid_users')[0].value = window.localStorage.getItem('valid_users')
 		  }
 	  });
 	</script>
