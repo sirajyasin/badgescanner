@@ -20,27 +20,27 @@
 		<div class="cols-sm-10">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-server fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="api_server" id="api_server" placeholder="API Server IP" value='https://wap.tplinkcloud.com/' required>
+				<input type="text" class="form-control" name="api_server" id="api_server" placeholder="API Server IP">
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-plug fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="token" id="token" placeholder="Token" value='f1f2df00-A1v58z3AR3UJ8wcuwUI9Ks9' required>
+				<input type="text" class="form-control" name="plug_token" id="plug_token" placeholder="Token" >
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-plug fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="red_plug_id" id="red_plug_id" placeholder="Red Plug ID" value='8006483CBBE44CAE81CCD5BC07526DF61A5A9B8E' required>
+				<input type="text" class="form-control" name="red_plug_id" id="red_plug_id" placeholder="Red Plug ID">
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-plug fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="green_plug_id" id="green_plug_id" placeholder="Green Plug Id" value='80065D728E14913AAD1899ABBD49774E1A5A1365' required>
+				<input type="text" class="form-control" name="green_plug_id" id="green_plug_id" placeholder="Green Plug Id">
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-lightbulb fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="lifx_token" id="lifx_token" placeholder="Light Token" value='cb285a31cee4325fddb8fffddfd80dfb5c1d24cbb797598da8772c83b3453fb6' required>
+				<input type="text" class="form-control" name="light_token" id="light_token" placeholder="Light Token">
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-user-plus fa" aria-hidden="true"></i></span>
-				<input type="text" class="form-control" name="valid_users" id="valid_users" placeholder="Valid Users" required>
+				<input type="text" class="form-control" name="valid_users" id="valid_users" placeholder="Valid Users">
 			</div>
 		</div>
 	</div>
@@ -65,22 +65,48 @@
         <script type="text/javascript" src="js/index.js"></script>
 	<script>
 	  $('#save').click(function(e) {
-              window.localStorage.setItem('api_server',  $('#api_server')[0].value);
-              window.localStorage.setItem('plug1_deviceid',  $('#plug1_deviceid')[0].value);
-              window.localStorage.setItem('plug1_token',  $('#plug1_token')[0].value);
-              window.localStorage.setItem('plug2_deviceid',  $('#plug2_deviceid')[0].value);
-              window.localStorage.setItem('plug2_token',  $('#plug2_token')[0].value);
-              window.localStorage.setItem('valid_users',  $('#valid_users')[0].value);
-	  })
+		  var users = $('#valid_users')[0].value;
+		  if ( users == null ) {
+		      users = ["efgjkmp", "ebalkan", "eamaral"];
+		  }
+		  var settings = { "api_server": $('#api_server')[0].value,
+	                           "valid_users":  users,
+	                           "red_plug_id": $('#red_plug_id')[0].value,
+	                           "green_plug_id": $('#green_plug_id')[0].value,
+	                           "plug_token": $('#plug_token')[0].value,
+			           "light_token": $('#light_token')[0].value
+		};
+		window.localStorage.setItem('valid_users', users);
+              $.ajax({
+                  url: "https://api.myjson.com/bins/5zbki",
+                  type: "PUT",
+                  contentType: "application/json; charset=utf-8",
+		  data: JSON.stringify(settings),
+                  dataType: "json",
+                  success: function (data, textStatus, jqXHR) {
+			  alert('Saved');
+                  }
+                });
+
+           });
+
           $(document).ready(function(){
-		  var server =  window.localStorage.getItem('api_server');
-		  var users =  window.localStorage.getItem('valid_users');
-		  if(server != null) {
-			 $('#old_server').html('Server IP: ' + server);
-		  }
-		  if ( users != null ) {
-			 $('#valid_users')[0].value = window.localStorage.getItem('valid_users');
-		  }
+                $.ajax({
+                  url: "https://api.myjson.com/bins/5zbki",
+                  type: "GET",
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (data, textStatus, jqXHR) {
+		      settings_json = data;
+		      $('#api_server')[0].value = settings_json['api_server'];
+		      $('#red_plug_id')[0].value = settings_json['red_plug_id'];
+		      $('#green_plug_id')[0].value = settings_json['green_plug_id'];
+		      $('#plug_token')[0].value = settings_json['plug_token'];
+		      $('#light_token')[0].value = settings_json['light_token'];
+		      $('#valid_users')[0].value = settings_json['valid_users'];
+                  }
+                });
+
 	  });
 	</script>
     </body>

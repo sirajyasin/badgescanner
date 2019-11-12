@@ -91,19 +91,22 @@ function startScan() {
 		              $('#blink')[0].style.display = 'block';
 		              $('#blink')[0].style.background = 'green';
 		              allow_user();
-                              setTimeout(startScan, 10000);
+                              setTimeout(startScan, 6000);
 		      } else {
 		              $('#blink')[0].style.display = 'block';
 		              $('#blink')[0].style.background = 'red';
 		              deny_user();
-                              setTimeout(startScan, 10000);
+                              setTimeout(startScan, 6000);
 	              }
+		  } else {
+			document.body.style.background = "orange"; 
+			setTimeout(startScan, 6000);
 		  }
                         
 		}, 
 		function (error) {
 			  document.body.style.background = "orange"; 
-			  setTimeout(startScan, 10000);
+			  setTimeout(startScan, 6000);
 		},
 		{
                   preferFrontCamera : true, // iOS and Android
