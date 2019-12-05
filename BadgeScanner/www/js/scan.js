@@ -74,6 +74,35 @@ function deny_user() {
     setTimeout(function(){ turn_off_light(); }, 6000);
 }
 
+function validate_code(signum, rand) {
+    $.ajax({
+    url: "https://api.myjson.com/bins/5zbki",
+    type: "GET",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    async: false,
+    success: function (data, textStatus, jqXHR) {
+        user_info =  data;
+        if ( !(signum in user_info['rand_num']) ) {
+            alert('Invalid User.');
+            return false;
+        }
+	if ( rand != user_info['rand_num'][signum]['rand'] ) {
+	    alert('Invalid code.');
+	    return false;
+        }
+	var expiry = new Date(user_info['rand_num'][signum]['expiry']);
+	var now = new Date();
+	if ( expiry > now ) {
+          return true;
+	} else {
+	  return false;
+	}
+    }
+    });
+
+}
+
 function startScan() {
         var valid_users;
 	users = window.localStorage.getItem('valid_users');
@@ -88,15 +117,24 @@ function startScan() {
 		  if ( scan_result && scan_result.length == 19 ) {
 		      var usr = scan_result.trim().substr(0,7);
 		      if (valid_users.includes(usr)) {
-		              $('#blink')[0].style.display = 'block';
-		              $('#blink')[0].style.background = 'green';
-		              allow_user();
-                              setTimeout(startScan, 6000);
+			var rand = scan_result.trim().substr(7, 19);
+			var result = validate_code(usr, rand);
+			if (result) {
+		          $('#blink')[0].style.display = 'block';
+		          $('#blink')[0].style.background = 'green';
+		          allow_user();
+                          setTimeout(startScan, 6000);
+			} else {
+		          $('#blink')[0].style.display = 'block';
+		          $('#blink')[0].style.background = 'red';
+		          deny_user();
+                          setTimeout(startScan, 6000);
+			}
 		      } else {
-		              $('#blink')[0].style.display = 'block';
-		              $('#blink')[0].style.background = 'red';
-		              deny_user();
-                              setTimeout(startScan, 6000);
+		        $('#blink')[0].style.display = 'block';
+		        $('#blink')[0].style.background = 'red';
+		        deny_user();
+                        setTimeout(startScan, 6000);
 	              }
 		  } else {
 			document.body.style.background = "orange"; 
