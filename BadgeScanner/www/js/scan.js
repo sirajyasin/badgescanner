@@ -75,6 +75,7 @@ function deny_user() {
 }
 
 function validate_code(signum, rand) {
+    var valid = false;
     $.ajax({
     url: "https://api.myjson.com/bins/5zbki",
     type: "GET",
@@ -85,6 +86,7 @@ function validate_code(signum, rand) {
         user_info =  data;
         if ( !(signum in user_info['rand_num']) ) {
             alert('Invalid User.');
+	    valid = false;
             return false;
         }
 	alert(rand);
@@ -92,18 +94,22 @@ function validate_code(signum, rand) {
 
 	if ( rand != user_info['rand_num'][signum]['rand'] ) {
 	    alert('Invalid code.');
+	    valid = false;
 	    return false;
         }
 	var expiry = new Date(user_info['rand_num'][signum]['expiry']);
 	var now = new Date();
 	if ( expiry > now ) {
-          return true;
+	  alert('Valid User and Valid Code.');
+	  valid = true;
 	} else {
 	  alert('code Expired.');
+	  valid = false;
 	  return false;
 	}
     }
     });
+    return valid;
 
 }
 
