@@ -87,6 +87,9 @@ function validate_code(signum, rand) {
             alert('Invalid User.');
             return false;
         }
+	alert(rand);
+	alert(user_info['rand_num'][signum]['rand']);
+
 	if ( rand != user_info['rand_num'][signum]['rand'] ) {
 	    alert('Invalid code.');
 	    return false;
