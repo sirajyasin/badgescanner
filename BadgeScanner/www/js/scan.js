@@ -96,6 +96,7 @@ function validate_code(signum, rand) {
 	if ( expiry > now ) {
           return true;
 	} else {
+	  alert('code Expired.');
 	  return false;
 	}
     }
@@ -117,6 +118,7 @@ function startScan() {
 		  if ( scan_result && scan_result.length == 19 ) {
 		      var usr = scan_result.trim().substr(0,7);
 		      if (valid_users.includes(usr)) {
+		        alert('Valid User');
 			var rand = scan_result.trim().substr(7, 19);
 			var result = validate_code(usr, rand);
 			if (result) {
