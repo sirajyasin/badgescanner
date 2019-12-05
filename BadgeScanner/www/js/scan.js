@@ -118,6 +118,7 @@ function startScan() {
 	cordova.plugins.barcodeScanner.scan(
 		function (result) {
 		  var  scan_result = result.text;
+		  alert(scan_result);
 		  if ( scan_result && scan_result.length == 19 ) {
 		      var usr = scan_result.trim().substr(0,7);
 		      if (valid_users.includes(usr)) {
