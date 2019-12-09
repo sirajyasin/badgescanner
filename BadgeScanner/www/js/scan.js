@@ -1,9 +1,12 @@
 
 var red_plug_id = "8006483CBBE44CAE81CCD5BC07526DF61A5A9B8E";
-var green_plug_id = "80065D728E14913AAD1899ABBD49774E1A5A1365";
+//var green_plug_id = "80065D728E14913AAD1899ABBD49774E1A5A1365";
+var green_plug_id = "8006BFEA82278563F6F1F36BB0019B141B6BF780";
 //var plug_token = "f1f2df00-A1v58z3AR3UJ8wcuwUI9Ks9";
 var plug_token = "f1f2df00-A3Uc43Ujs5w2Ov59RlccQF0";
 var light_token = "cb285a31cee4325fddb8fffddfd80dfb5c1d24cbb797598da8772c83b3453fb6";
+var gate1 = "d073d5580055";
+var gate2 = "d073d5548daa";
 
 
 function api_call(state, device_id) {
@@ -85,25 +88,18 @@ function validate_code(signum, rand) {
     success: function (data, textStatus, jqXHR) {
         user_info =  data;
         if ( !(signum in user_info['rand_num']) ) {
-            alert('Invalid User.');
 	    valid = false;
             return false;
         }
-	alert(rand);
-	alert(user_info['rand_num'][signum]['rand']);
-
 	if ( rand != user_info['rand_num'][signum]['rand'] ) {
-	    alert('Invalid code.');
 	    valid = false;
 	    return false;
         }
 	var expiry = new Date(user_info['rand_num'][signum]['expiry']);
 	var now = new Date();
 	if ( expiry > now ) {
-	  alert('Valid User and Valid Code.');
 	  valid = true;
 	} else {
-	  alert('code Expired.');
 	  valid = false;
 	  return false;
 	}
@@ -124,11 +120,9 @@ function startScan() {
 	cordova.plugins.barcodeScanner.scan(
 		function (result) {
 		  var  scan_result = result.text;
-		  alert(scan_result);
 		  if ( scan_result && scan_result.length == 19 ) {
 		      var usr = scan_result.trim().substr(0,7);
 		      if (valid_users.includes(usr)) {
-		        alert('Valid User');
 			var rand = scan_result.trim().substr(7, 19);
 			var result = validate_code(usr, rand);
 			if (result) {
